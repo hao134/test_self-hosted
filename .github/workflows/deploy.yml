@@ -1,0 +1,32 @@
+name: Self-hosted Runner Test
+
+on:
+  push:
+    branches:
+      - main  # 當推送到 main 分支時觸發
+
+jobs:
+  self-hosted-test:
+    runs-on: [self-hosted]  # 使用 self-hosted runner
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3  # 檢出代碼
+
+      - name: Print system information
+        run: |
+          echo "Running on $(uname -a)"
+          echo "Current directory: $(pwd)"
+          echo "User: $(whoami)"
+
+      - name: Test Node.js
+        run: |
+          echo "Checking Node.js version..."
+          node --version || echo "Node.js is not installed on the runner."
+
+      - name: Test Python
+        run: |
+          echo "Checking Python version..."
+          python --version || echo "Python is not installed on the runner."
+
+      - name: Print success message
+        run: echo "Self-hosted runner is working correctly!"
